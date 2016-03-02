@@ -9,8 +9,8 @@ def get_page_number_from_request(request, querystring_key=PAGE_LABEL, default=1)
     then *default* number is returned.
     """
     try:
-        return int(request.REQUEST[querystring_key])
-    except (KeyError, TypeError, ValueError):
+        return int(request.GET.get(querystring_key) or request.POST.get(querystring_key) or default)
+    except (TypeError, ValueError):
         return default
         
 def get_page_from_context(context):
