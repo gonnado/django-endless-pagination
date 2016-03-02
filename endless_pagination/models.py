@@ -2,9 +2,6 @@ from django.template import Context, loader
 
 from endless_pagination import settings, utils
 
-# preload page templates
-PAGE_TEMPLATE = loader.get_template("endless/page_link.html")
-CURRENT_TEMPLATE = loader.get_template("endless/current_link.html")
 
 class EndlessPage(object):
     """
@@ -42,7 +39,8 @@ class EndlessPage(object):
             'add_nofollow': settings.ADD_NOFOLLOW,
             'querystring_key': self.querystring_key,
         })
-        template = CURRENT_TEMPLATE if self.is_current else PAGE_TEMPLATE
+        template = loader.get_template("endless/current_link.html") if self.is_current else \
+            loader.get_template("endless/page_link.html")
         return template.render(context_instance)
                 
         
